@@ -50,3 +50,29 @@ join detalles d on p.id_producto=d.id_producto
 join facturas f on d.id_factura = f.num_factura
 join modo_pagos mp on f.num_pago = mp.num_pago
 where mp.nombre = 'bitcoin'
+
+-- punto numero 3
+
+-- Visualizacion de clietes que no han realizado compras 
+
+select
+
+c.nombre
+--f.num_factura
+
+from clientes c
+left join facturas f on c.id_cliente = f.id_cliente
+where f.id_cliente is null  
+
+-- eliminacion de los clientes que no han realizado compras 
+
+delete c
+
+from clientes c
+
+left join facturas f on c.id_cliente = f.id_cliente
+where f.id_cliente is null 
+
+
+
+
