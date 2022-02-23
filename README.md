@@ -106,6 +106,57 @@ join facturas f on d.id_factura = f.num_factura
 join modo_pagos mp on f.num_pago = mp.num_pago
 where mp.nombre != 'tarjeta débito' and p.nombre like 'C%'
 
+-- Punto numero 5
+
+-- Visualizacion de los datos para realizar los calculos 
+
+
+select 
+  
+   c.nombre,
+   p.nombre,
+   mp.nombre,
+   ca.nombre,
+   d.precio,
+   d.cantidad
+
+         
+from modo_pagos mp
+
+join facturas f on mp.num_pago= f.num_pago
+join detalles d on f.num_factura=d.id_factura
+join productos p on d.id_producto=p.id_producto
+join categorias ca on p.id_categoria = ca.id_categoria
+join clientes c on f.id_cliente = c.id_cliente
+where mp.nombre = 'efectivo' and ca.nombre = 'mercado'
+
+
+order by c.id_cliente
+
+-- Visualizacion del total comprado por cliente que han pagado en 'efectivo' productos de la categoría de 'Mercado'
+
+
+select 
+  
+    c.id_cliente,c.nombre,
+	sum(d.precio * d.cantidad) [total]
+
+
+  
+    
+from modo_pagos mp
+
+join facturas f on mp.num_pago= f.num_pago
+join detalles d on f.num_factura=d.id_factura
+join productos p on d.id_producto=p.id_producto
+join categorias ca on p.id_categoria = ca.id_categoria
+join clientes c on f.id_cliente = c.id_cliente
+where mp.nombre = 'efectivo' and ca.nombre = 'mercado'
+
+group by c.id_cliente,c.nombre
+
+order by c.id_cliente
+
 
 
 
