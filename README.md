@@ -75,4 +75,37 @@ where f.id_cliente is null
 
 
 
+-- Punto numero 4
+
+-- Visualizacion de productos que empiezan por 'C' y tienen metodo de pago diferente a tarjeta débito
+
+select 
+  mp.nombre,
+  p.nombre,
+  p.stock
+    
+from modo_pagos mp
+
+join facturas f on mp.num_pago= f.num_pago
+join detalles d on f.num_factura=d.id_factura
+join productos p on d.id_producto=p.id_producto
+where mp.nombre != 'tarjeta débito' and p.nombre like 'C%'
+
+-- Asignacion de incremento del stock de los productos cuyo nombre inician con la letra 'C' y que no hayan sido pagados con 'tarjeta débito'
+
+
+
+update p
+ 
+ set p.stock = p.stock+1
+
+from productos p
+
+join detalles d on p.id_producto=d.id_producto
+join facturas f on d.id_factura = f.num_factura
+join modo_pagos mp on f.num_pago = mp.num_pago
+where mp.nombre != 'tarjeta débito' and p.nombre like 'C%'
+
+
+
 
